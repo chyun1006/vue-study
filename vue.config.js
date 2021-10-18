@@ -4,13 +4,13 @@ module.exports = {
   //   chainWebpack: (config) => {
   //     config.module.rule('js').use('happypack/loader?id=happyBabel')
   //   },
-
+  productionSourceMap: false,
   configureWebpack: {
     module: {
       rules: [
         {
           test: /\.js$/,
-          loader: 'babel-loader',
+          loader: 'babel-loader?cacheDirectory',
           exclude: /node_modules/,
           include: /src/,
         },

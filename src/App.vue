@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <MyMenu></MyMenu>
+    <!-- <MyMenu style="float:left;height:100%;"></MyMenu> -->
     <div id="content">
       <router-view></router-view>
     </div>
@@ -8,11 +8,11 @@
 </template>
 
 <script>
-import MyMenu from '@/components/MyMenu'
+// import MyMenu from '@/components/MyMenu'
 export default {
   name: 'App',
   components: {
-    MyMenu,
+    // MyMenu,
   },
 }
 </script>
@@ -20,9 +20,9 @@ export default {
 <style>
 #app {
   height: 100%;
-  display: flex;
 }
 #content {
   padding: 0 10px;
+  overflow: hidden;
 }
 </style>

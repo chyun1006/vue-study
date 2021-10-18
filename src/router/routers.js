@@ -21,6 +21,31 @@ const routes = [
     name: '组件生命周期',
     component: () => import('@/views/LifeCycle'),
   },
+  {
+    path: '/http',
+    name: '网络请求',
+    component: () => import('@/views/Http'),
+  },
+  {
+    path: '/keepalive',
+    name: 'Keep-Alive',
+    component: () => import('@/views/KeepAlive/Index'),
+  },
+  {
+    path: '/async-com',
+    name: '异步组件',
+    component: () => import('@/views/AsyncCom'),
+  },
+  {
+    path: '/test',
+    name: '测试页面',
+    component: () => import('@/views/Test'),
+  },
+  {
+    path: '/chart',
+    name: '图表',
+    component: () => import('@/views/EChart'),
+  },
 ]
 
 export default routes

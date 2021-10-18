@@ -8,7 +8,10 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "echarts": "^5.2.1",
+    "iscroll": "^5.2.0",
     "view-design": "^4.6.1",
     "vue": "^2.6.11",
     "vue-router": "^3.5.2",
@@ -21,9 +24,11 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "express": "^4.17.1",
     "happypack": "^5.0.1",
     "less": "^2.7.3",
     "less-loader": "^5.0.0",
+    "muller-cli": "^0.0.3",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
