@@ -1,0 +1,15 @@
+#app {
+  background-color: var(--main-bg-color);
+}
+
+.el-select .el-input input {
+  background-color: var(--input-bg-color);
+}
+
+.content {
+  background-color: var(--input-bg-color);
+}
+
+.el-radio-group .el-radio-button span {
+  background-color: var(--input-bg-color);
+}

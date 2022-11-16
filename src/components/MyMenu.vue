@@ -1,5 +1,5 @@
 <template>
-  <Menu :theme="theme3" active-name="1">
+  <Menu :theme="theme3" width="200px" active-name="1">
     <MenuItem
       v-for="menu in menuList"
       :key="menu.name"

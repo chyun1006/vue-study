@@ -1,28 +1,31 @@
 <template>
   <div id="app">
-    <!-- <MyMenu style="float:left;height:100%;"></MyMenu> -->
+    <MyMenu style="float: left; height: 100vh"></MyMenu>
     <div id="content">
-      <router-view></router-view>
+      <keep-alive> <router-view></router-view></keep-alive>
     </div>
   </div>
 </template>
 
 <script>
-// import MyMenu from '@/components/MyMenu'
+import MyMenu from "@/components/MyMenu";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    // MyMenu,
+    MyMenu,
   },
-}
+};
 </script>
 
 <style>
 #app {
   height: 100%;
+  display: flex;
 }
 #content {
-  padding: 0 10px;
-  overflow: hidden;
+  padding: 10px;
+  height: 100vh;
+  width: calc(100% - 200px);
+  overflow: auto;
 }
 </style>

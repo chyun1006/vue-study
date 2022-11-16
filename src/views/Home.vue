@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1>{{ message }}</h1>
-    <VirtualList :data-list="list"></VirtualList>
 
     <RenderCom title="submit"></RenderCom>
     <ul>
@@ -33,7 +32,6 @@
   </div>
 </template>
 <script>
-import VirtualList from '@/components/VirtualList'
 import RenderCom from '@/components/RenderCom'
 // import SlotTest from '@/components/SlotTest'
 // import createScroller from '@/components/VTable/index.js'
@@ -1028,7 +1026,6 @@ export default {
     }
   },
   components: {
-    VirtualList,
     RenderCom,
     VTable,
     // SlotTest,

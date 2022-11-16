@@ -5,7 +5,15 @@
 </template>
 
 <script>
+import BC from '../utils/broadcast'
 export default {
+  mounted() {
+    BC.onmessage = ({ data }) => {
+      const { target, dataSource } = data
+      console.log(target, dataSource)
+      this.message = 'asdfasdf' + Math.random()
+    }
+  },
   methods: {
     httpClick() {
       this.$http({

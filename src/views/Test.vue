@@ -1,20 +1,79 @@
 <template>
-  <div id="test-app"></div>
+  <div id="mount-ele">
+    <el-select v-model="value" placeholder="请选择">
+      <el-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+      >
+      </el-option>
+    </el-select>
+
+    <el-radio-group v-model="theme">
+      <el-radio-button label="light"></el-radio-button>
+      <el-radio-button label="dark"></el-radio-button>
+    </el-radio-group>
+  </div>
 </template>
 
 <script>
-import Vue from 'vue'
+import "@/utils/theme/base.css";
 export default {
-  mounted() {
-    new Vue({
-      render: function(h) {
-        return h('div', {}, [h('h1', '你好啊')])
-      },
-    }).$mount('#test-app')
-
-    console.log(this)
+  data() {
+    return {
+      theme: "dark",
+      options: [
+        {
+          value: "选项1",
+          label: "黄金糕",
+        },
+        {
+          value: "选项2",
+          label: "双皮奶",
+        },
+        {
+          value: "选项3",
+          label: "蚵仔煎",
+        },
+        {
+          value: "选项4",
+          label: "龙须面",
+        },
+        {
+          value: "选项5",
+          label: "北京烤鸭",
+        },
+      ],
+      value: "",
+    };
   },
-}
+  watch: {
+    theme: {
+      handler: function (newV) {
+        const url = `./theme/${newV}.css`;
+        let link = document.getElementById("theme");
+        if (link) {
+          link.href = url;
+        } else {
+          link = document.createElement("link");
+          link.rel = "stylesheet";
+          link.id = "theme";
+          link.type = "text/css";
+          link.href = url;
+          document.head.appendChild(link);
+        }
+      },
+      immediate: true,
+    },
+  },
+  mounted() {},
+  methods: {},
+};
 </script>
 
-<style></style>
+<style lang="less">
+// #app {
+//   background-color: #212943;
+// }
+</style>
