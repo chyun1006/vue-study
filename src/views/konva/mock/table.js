@@ -1,5 +1,80 @@
 const data = [
   {
+    name: `测试姓名1`,
+    age: Math.random() * 100,
+    address: `测试地址1`,
+    tags: "ad",
+    flightno: `A124-1`,
+    releasetype: "放行昂视",
+    status: `正常`,
+    flyno: "A112345",
+    layout: "asd",
+    leave: "北京",
+    arisk: Math.random() * 100,
+    brisk: Math.random() * 100,
+    crisk: Math.random() * 100,
+    drisk: Math.random() * 100,
+    erisk: Math.random() * 100,
+    frisk: Math.random() * 100,
+    Action: "删除",
+  },
+  {
+    key: "2",
+    name: "Jim Green",
+    age: 42,
+    address: "London No. 1 Lake Park",
+    tags: ["loser"],
+  },
+  {
+    key: "3",
+    name: "Joe Black",
+    age: 32,
+    address: "Sidney No. 1 Lake Park",
+    tags: ["cool", "teacher"],
+  },
+  {
+    key: "1",
+    name: "John Brown",
+    age: 32,
+    address: "New York No. 1 Lake Park",
+    tags: ["nice", "developer"],
+  },
+  {
+    key: "2",
+    name: "Jim Green",
+    age: 42,
+    address: "London No. 1 Lake Park",
+    tags: ["loser"],
+  },
+  {
+    key: "3",
+    name: "Joe Black",
+    age: 32,
+    address: "Sidney No. 1 Lake Park",
+    tags: ["cool", "teacher"],
+  },
+  {
+    key: "1",
+    name: "John Brown",
+    age: 32,
+    address: "New York No. 1 Lake Park",
+    tags: ["nice", "developer"],
+  },
+  {
+    key: "2",
+    name: "Jim Green",
+    age: 42,
+    address: "London No. 1 Lake Park",
+    tags: ["loser"],
+  },
+  {
+    key: "3",
+    name: "Joe Black",
+    age: 32,
+    address: "Sidney No. 1 Lake Park",
+    tags: ["cool", "teacher"],
+  },
+  {
     key: "1",
     name: "John Brown",
     age: 32,
@@ -50,11 +125,100 @@ const columns = [
     scopedSlots: { customRender: "tags" },
   },
   {
+    title: "航班号",
+    dataIndex: "flightno",
+    scopedSlots: { customRender: "flightno" },
+  },
+  {
+    title: "放行方式",
+    dataIndex: "releasetype",
+    scopedSlots: { customRender: "releasetype" },
+  },
+  {
+    title: "状态",
+    dataIndex: "status",
+    scopedSlots: { customRender: "status" },
+  },
+  {
+    title: "机号",
+    dataIndex: "flyno",
+    scopedSlots: { customRender: "flyno" },
+  },
+  {
+    title: "记性布局",
+    dataIndex: "layout",
+    scopedSlots: { customRender: "layout" },
+  },
+  {
+    title: "始发",
+    dataIndex: "leave",
+    scopedSlots: { customRender: "leave" },
+  },
+  {
+    title: "A风险",
+    dataIndex: "arisk",
+    scopedSlots: { customRender: "arisk" },
+  },
+  {
+    title: "B风险",
+    dataIndex: "brisk",
+    scopedSlots: { customRender: "brisk" },
+  },
+  {
+    title: "c风险",
+    dataIndex: "crisk",
+    scopedSlots: { customRender: "crisk" },
+  },
+  {
+    title: "d风险",
+    dataIndex: "drisk",
+    scopedSlots: { customRender: "drisk" },
+  },
+  {
+    title: "e风险",
+    dataIndex: "erisk",
+    scopedSlots: { customRender: "erisk" },
+  },
+  {
+    title: "f风险",
+    dataIndex: "frisk",
+    scopedSlots: { customRender: "frisk" }, 
+  },
+  {
     title: "Action",
-    key: "action",
+    dataIndex: "action",
     scopedSlots: { customRender: "action" },
     fixed: "right",
   },
 ];
 
-export { data, columns };
+const genData = () => {
+  console.time("生成数据");
+  const data = Array.from({ length: 1000 }).map((_, index) => {
+    return {
+      name: `测试姓名${index}`,
+      age: Math.random() * 100,
+      address: `测试地址${index}`,
+      tags: `测试自定义列${index}`,
+      flightno: `A124-${index}`,
+      releasetype: "放行昂视",
+      status: `正常`,
+      flyno: "A112345",
+      layout: "asd",
+      leave: "北京",
+      arisk: Math.random() * 100,
+      brisk: Math.random() * 100,
+      crisk: Math.random() * 100,
+      drisk: Math.random() * 100,
+      erisk: Math.random() * 100,
+      frisk: Math.random() * 100,
+      Action: "删除",
+    };
+  });
+  console.timeEnd("生成数据");
+
+  return data;
+};
+
+// console.log("data1", data1);
+export { data, columns, genData };

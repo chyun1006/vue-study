@@ -14,6 +14,11 @@
       <el-radio-button label="light"></el-radio-button>
       <el-radio-button label="dark"></el-radio-button>
     </el-radio-group>
+
+    <ul>
+      <li v-for="item in list" :key="item">{{ item }}</li>
+    </ul>
+    <button @click="chage">click</button>
   </div>
 </template>
 
@@ -46,6 +51,7 @@ export default {
         },
       ],
       value: "",
+      list: [1, 2, 3, 4],
     };
   },
   watch: {
@@ -68,7 +74,11 @@ export default {
     },
   },
   mounted() {},
-  methods: {},
+  methods: {
+    chage() {
+      this.list = [1, 3, 3, 4];
+    },
+  },
 };
 </script>
 

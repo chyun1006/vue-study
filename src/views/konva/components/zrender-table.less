@@ -1,17 +1,23 @@
 .canvas-table-container {
   z-index: 1;
   position: relative;
+  overflow: hidden;
   .table-canvas {
     position: relative;
+    overflow: auto;
   }
   .left-fixed-column {
-    position: absolute;
-    z-index: 2;
+    left: 0;
   }
   .right-fixed-column {
-    position: absolute;
-    z-index: 2;
+    right: 0;
   }
+}
+
+.fixed-column {
+  position: absolute;
+  top: 0;
+  z-index: 2;
 }
 
 .html-cell {
@@ -19,4 +25,53 @@
   display: flex;
   align-items: center;
   font-size: 12px;
+}
+
+.is-shadowbox {
+  box-shadow: 0 0 10px #0000001f;
+}
+
+.fixed-header {
+  display: flex;
+
+  .header-table-cell {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.canvas-table-wrapper {
+  position: relative;
+  // overflow: auto;
+}
+
+// 水平滚动条
+.horizontal-scrollbar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  overflow: auto;
+  z-index: 2;
+  // transform: translateY(100%);
+
+  .scroll-inner {
+    height: 1px;
+  }
+}
+
+.vertical-scrollbar {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 17px;
+  height: 100%;
+  overflow: auto;
+  z-index: 2;
+  // transform: translateY(100%);
+
+  .scroll-inner {
+    width: 1px;
+  }
 }
