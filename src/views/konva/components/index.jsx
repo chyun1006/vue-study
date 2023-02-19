@@ -17,8 +17,17 @@ export default {
     columns: Array, // 列
     dataSource: Array, // 数据源
     maxHeight: Number, // 最大高度
+    /**
+     * 行的 style 的回调方法，也可以使用一个固定的 Object 为所有行设置一样的 Style。
+     *
+     */
     rowStyle: Function,
+    /**
+     * 单元格的 style 的回调方法，也可以使用一个固定的 Object 为所有单元格设置一样的 Style。
+     *
+     */
     cellStyle: Function,
+    stripe: Boolean, //是否为斑马纹 table
   },
   watch: {
     dataSource(newV) {

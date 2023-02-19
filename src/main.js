@@ -21,6 +21,10 @@ Vue.use(ViewUI);
 Vue.use(Vant);
 Vue.prototype.$http = http;
 
+import Antd from 'ant-design-vue';
+import 'ant-design-vue/dist/antd.css';
+Vue.use(Antd);
+
 new Vue({
   store,
   router,

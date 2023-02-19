@@ -1,6 +1,5 @@
 import { init, Rect, Text, Group } from "zrender/dist/zrender";
 import Vue from "vue";
-// import TableHeader from "./table-header";
 import utils from "./utils";
 import config from "./config";
 import geoHelper from "./geometry-helper/index";
@@ -46,15 +45,19 @@ export default {
       }
     },
 
-    // 绘制表头
+    /**
+     * 绘制表头
+     * @param {*} columns 表头列
+     * @param {*} position 位置
+     * @param {*} offsetX 初始偏移量
+     */
     _drawHeaderGroup(columns, position, offsetX) {
       let startX = 0;
-      const headGroup = new Group({
+      const group = new Group({
         id: `header-group-${position}`,
         x: offsetX,
         y: 0,
       });
-      let preCell;
       columns.forEach((col, colIndex) => {
         const text = new Text({
           style: {
@@ -64,15 +67,12 @@ export default {
             textAlign: "left",
           },
         });
-        preCell = headGroup._children.find(
-          c => c.id == `header-cell-center-${colIndex - 1}`
-        );
         const cell = new Rect({
           id: `header-cell-${position}-${colIndex}`,
           style: {
-            fill: config.headerBackground,
+            fill: colIndex % 2 == 0 ? "YELLOW" : "PINK",
           },
-          _preCell: preCell,
+          _cellInfo: { colIndex },
           textContent: text,
           shape: {
             x: startX,
@@ -85,38 +85,95 @@ export default {
           },
         });
 
-        let x = cell.shape.x;
-        let preCellX = preCell?.shape.x;
-        const divider = geoHelper.Divider(
-          { x: startX, id: `divider-${position}-${colIndex}`, cell },
-          (oldW, newW, diff) => {
-            console.log("--_preCell--", cell._preCell.shape.width);
-            cell.attr({
-              // style: {
-              //   fill: "red",
-              // },
-              shape: {
-                x: x + diff,
-                width: newW,
-              },
-            });
+        // 绘制拖拽手柄
+        if (colIndex > 0) {
+          const self = this;
+          const _preCell = group._children.find(
+            c => c.id == `header-cell-${position}-${colIndex - 1}`
+          );
+          const _nextCell = cell;
+          const divider = new geoHelper.Divider(
+            {
+              x: startX,
+              id: `header-divider-${position}-${colIndex - 1}`,
+              preCell: _preCell,
+              nextCell: _nextCell,
+            },
+            function ({ oldPreWidth }, { oldNextWidth, oldNextX }, diff) {
+              const { preCell, nextCell } = this;
 
-            cell._preCell.attr({
-              // style: {
-              //   fill: "red",
-              // },
-              shape: {
-                width: preCellX + diff,
-              },
-            });
-            console.log("--width--", cell._preCell);
-          }
-        );
-        headGroup.add(divider);
-        headGroup.add(cell);
+              self._scaleTableBodyCellWidth(
+                preCell,
+                nextCell,
+                position,
+                { oldPreWidth },
+                { oldNextWidth, oldNextX },
+                diff
+              );
+              preCell?.attr({
+                shape: {
+                  width: oldPreWidth + diff,
+                },
+              });
+              nextCell?.attr({
+                shape: {
+                  x: oldNextX + diff,
+                  width: oldNextWidth - diff,
+                },
+              });
+            }
+          );
+          group.add(divider);
+        }
+
+        group.add(cell);
         startX += col.width || config.cellWidth;
       });
-      this.headerGroup.add(headGroup);
+      this.headerGroup.add(group);
+    },
+
+    /**
+     * 表格body中指定单元格的缩放
+     * @param {*} preCell
+     * @param {*} nextCell
+     * @param {*} position
+     * @param {*} param3
+     * @param {*} param4
+     * @param {*} diff
+     */
+    _scaleTableBodyCellWidth(
+      preCell,
+      nextCell,
+      position,
+      { oldPreWidth },
+      { oldNextWidth, oldNextX },
+      diff
+    ) {
+      const tableBody = this.bodyGroup._children.find(
+        h => h.id == `body-group-${position}`
+      );
+      const preCellIndex = preCell._cellInfo.colIndex;
+      const nextCellIndex = nextCell._cellInfo.colIndex;
+      tableBody._children.forEach(row => {
+        row._children.forEach(col => {
+          const [, , , colI] = col.id.split("-");
+          if (colI == preCellIndex) {
+            col?.attr({
+              shape: {
+                width: oldPreWidth + diff,
+              },
+            });
+          }
+          if (colI == nextCellIndex) {
+            col?.attr({
+              shape: {
+                x: oldNextX + diff,
+                width: oldNextWidth - diff,
+              },
+            });
+          }
+        });
+      });
     },
 
     // 绘制table body
@@ -146,8 +203,8 @@ export default {
 
     /**
      * 绘制表格内容
-     * @param {*} fixedDirection 位置
-     * @param {*} columns 列
+     * @param {*} fixedDirection 位置 left,center,right
+     * @param {*} columns 列数据
      * @param {*} lcWidth 左列总宽度
      * @param {*} rcWidth 右列总宽度
      */
@@ -164,15 +221,16 @@ export default {
         x: offsetX,
         y: 0,
       });
-
+      // 绘制表头
       this._drawHeaderGroup(columns, postion, offsetX);
+
+      // 绘制表格内容
       this.dataSource.forEach((item, rowIndex) => {
         let startX = 0;
         this._drawTableBorder(startY);
         const rowGroup = this._createRow(startX, startY);
         rowGroup.rowIndex = rowIndex;
         group.add(rowGroup);
-        // console.log("row-style", this.$parent.rowStyle);
         const rowStyle = this.$parent?.rowStyle({
           row: item,
           rowIndex: rowGroup.rowIndex,
@@ -309,7 +367,15 @@ export default {
           });
         });
       });
-      rowGroup.on("mouseover",  function () {
+      rowGroup.on("mouseover", function () {
+        console.log("mouseover", this);
+        // this._children.forEach(row => {
+        //   row.attr({
+        //     style: {
+        //       fill: config.hoverColor,
+        //     },
+        //   });
+        // });
         this.eachChild(e => {
           e.attr({
             style: {

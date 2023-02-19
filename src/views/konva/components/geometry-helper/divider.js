@@ -1,6 +1,6 @@
 import { Rect } from "zrender/dist/zrender";
 import config from "../config";
-function createDivider({ x, id,cell },callback) {
+function createDivider({ x, id, preCell, nextCell }, callback) {
   const divider = new Rect({
     zlevel: 100,
     id,
@@ -14,6 +14,8 @@ function createDivider({ x, id,cell },callback) {
       height: config.headerHeight / 3,
     },
   });
+  divider.preCell = preCell;
+  divider.nextCell = nextCell;
   divider.on("mouseover", () => {
     this.origin = Object.assign({}, divider.shape);
     divider.attr({
@@ -38,21 +40,30 @@ function createDivider({ x, id,cell },callback) {
     const start = divider.shape.x;
     const startX = event.event.screenX;
     document.addEventListener("mousemove", mousemove);
-    document.onmouseup =  ()=> {
+    document.onmouseup = () => {
       document.removeEventListener("mousemove", mousemove);
     };
+    const oldPreWidth = preCell.shape.width;
+    const oldPreX = preCell.shape.x;
+
+    const oldNextWidth = nextCell.shape.width;
+    const oldNextX = nextCell.shape.x;
 
     function mousemove(e) {
       const diff = e.screenX - startX;
-      const newX = start + diff
+      const newX = start + diff;
       divider.attr({
         shape: {
           x: newX,
         },
       });
-      const oldW  = cell.shape.width
-      const newW  = oldW + diff
-      callback(oldW,newW,diff)
+
+      callback.call(
+        divider,
+        { oldPreWidth, oldPreX },
+        { oldNextWidth, oldNextX },
+        diff
+      );
     }
   });
   return divider;

@@ -185,6 +185,36 @@ const columns = [
     scopedSlots: { customRender: "frisk" }, 
   },
   {
+    title: "A风险1",
+    dataIndex: "arisk1",
+    scopedSlots: { customRender: "arisk1" },
+  },
+  {
+    title: "B风险1",
+    dataIndex: "brisk1",
+    scopedSlots: { customRender: "brisk1" },
+  },
+  {
+    title: "c风险1",
+    dataIndex: "crisk1",
+    scopedSlots: { customRender: "crisk1" },
+  },
+  {
+    title: "d风险1",
+    dataIndex: "drisk1",
+    scopedSlots: { customRender: "drisk1" },
+  },
+  {
+    title: "e风险1",
+    dataIndex: "erisk1",
+    scopedSlots: { customRender: "erisk1" },
+  },
+  {
+    title: "f风险1",
+    dataIndex: "frisk1",
+    scopedSlots: { customRender: "frisk1" }, 
+  },
+  {
     title: "Action",
     dataIndex: "action",
     scopedSlots: { customRender: "action" },
@@ -212,6 +242,12 @@ const genData = () => {
       drisk: Math.random() * 100,
       erisk: Math.random() * 100,
       frisk: Math.random() * 100,
+      arisk1: Math.random() * 100,
+      brisk1: Math.random() * 100,
+      crisk1: Math.random() * 100,
+      drisk1: Math.random() * 100,
+      erisk1: Math.random() * 100,
+      frisk1: Math.random() * 100,
       Action: "删除",
     };
   });
