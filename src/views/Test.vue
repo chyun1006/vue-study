@@ -33,13 +33,18 @@
     <div style="width: 500px">
       <CTree :treeData="treeData"></CTree>
     </div>
+
+    <TestCom :data="tsetData"></TestCom>
+    <button @click="changeData">阿萨德</button>
   </div>
 </template>
 
 <script>
 import "@/utils/theme/base.css";
+import TestCom from "@/components/TestCom";
 
 import CTree from "@/components/CTree";
+const data = [1,2,3,4];
 
 const treeData = [
   {
@@ -105,9 +110,10 @@ export default {
       checkedKeys: ["0-0-0-0-0"],
       selectedKeys: [],
       treeData,
+      tsetData: data
     };
   },
-  components: { CTree },
+  components: { CTree, TestCom },
   watch: {
     theme: {
       handler: function (newV) {
@@ -148,6 +154,10 @@ export default {
       console.log("onSelect", info);
       this.selectedKeys = selectedKeys;
     },
+
+    changeData() {
+      this.tsetData = data.filter(d=>d>2);
+    }
   },
 };
 </script>
